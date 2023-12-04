@@ -10,7 +10,7 @@ type Line = [number, CubeCount[]];
 
 const lines: Line[] = Util.loadInput().map(toData);
 
-function toData(line) {
+function toData(line): Line {
   const [game, pullsRaw] = line.split(": ");
   const pulls = pullsRaw.split(";");
   return [Number(game.split(" ")[1]), pulls.map(toPullStat)];

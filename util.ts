@@ -1,5 +1,5 @@
-import fs from "fs";
+import * as fs from "fs";
 
-export function loadInput() {
+export function loadInput(): string[] {
   return fs.readFileSync("input").toString().split("\n");
 }
