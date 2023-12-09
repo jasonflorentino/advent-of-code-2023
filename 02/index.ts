@@ -1,3 +1,5 @@
+// https://adventofcode.com/2023/day/2
+// (cd 02; bun index.ts)
 import * as Util from "../util";
 
 interface CubeCount {
@@ -9,6 +11,36 @@ interface CubeCount {
 type Line = [number, CubeCount[]];
 
 const lines: Line[] = Util.loadInput().map(toData);
+
+// 1 - What is the sum of the IDs of those games?
+console.log(one(lines)); // 2101
+
+// 2 - What is the sum of the power of these sets?
+console.log(two(lines)); // 58269
+
+function one(lines: Line[]) {
+  const MAX_CUBES: CubeCount = {
+    red: 12,
+    green: 13,
+    blue: 14,
+  };
+  let total = 0;
+  for (const line of lines) {
+    if (isPossible(line, MAX_CUBES)) {
+      total += line[0];
+    }
+  }
+  return total;
+}
+
+function two(lines: Line[]): number {
+  let total = 0;
+  for (const game of lines) {
+    const [minRed, minGreen, minBlue] = findMins(game);
+    total += minRed * minGreen * minBlue;
+  }
+  return total;
+}
 
 function toData(line): Line {
   const [game, pullsRaw] = line.split(": ");
@@ -41,30 +73,6 @@ function isPossible(line: Line, maxCubes) {
   return true;
 }
 
-function one(lines: Line[]) {
-  const MAX_CUBES: CubeCount = {
-    red: 12,
-    green: 13,
-    blue: 14,
-  };
-  let total = 0;
-  for (const line of lines) {
-    if (isPossible(line, MAX_CUBES)) {
-      total += line[0];
-    }
-  }
-  return total;
-}
-
-function two(lines: Line[]): number {
-  let total = 0;
-  for (const game of lines) {
-    const [minRed, minGreen, minBlue] = findMins(game);
-    total += minRed * minGreen * minBlue;
-  }
-  return total;
-}
-
 function findMins(game: Line) {
   const mins: CubeCount = {
     red: 0,
@@ -78,6 +86,3 @@ function findMins(game: Line) {
   }
   return [mins.red, mins.green, mins.blue];
 }
-
-console.log(one(lines));
-console.log(two(lines));

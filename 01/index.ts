@@ -1,3 +1,5 @@
+// https://adventofcode.com/2023/day/1
+// (cd 01; bun index.ts)
 import * as Util from "../util";
 
 const lines = Util.loadInput();
@@ -5,16 +7,7 @@ const lines = Util.loadInput();
 const numstrs = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
 const numstrs2 = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "0",
+  ...numstrs,
   "one",
   "two",
   "three",
@@ -37,6 +30,12 @@ const numStrMap = {
   eight: "8",
   nine: "9",
 };
+
+// 1 - What is the sum of all of the calibration values?
+console.log(lines.reduce(toLineValSummer(getCalibrationValue), 0)); // 53386
+
+// 2 - What is the sum of all of the calibration values?
+console.log(lines.reduce(toLineValSummer(getCalibrationValue2), 0)); // 53312
 
 function toDigit(n) {
   if (n.length > 1) return numStrMap[n];
@@ -113,6 +112,3 @@ function findStartMatches(c, possibleNums) {
 function toLineValSummer(getCalVal) {
   return (total, str) => total + Number(getCalVal(str));
 }
-
-console.log(lines.reduce(toLineValSummer(getCalibrationValue), 0));
-console.log(lines.reduce(toLineValSummer(getCalibrationValue2), 0));
