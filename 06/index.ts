@@ -11,6 +11,7 @@ console.log(collectWinWays(lines)); // 2612736
 // How many ways can you beat the record in this one much longer race?
 console.log(oneRaceWinWays(lines)); // 29891250
 
+// for pt 2
 function oneRaceWinWays(lines) {
   return computeWinWaysTotal(toOneRaceStat(lines));
 }
