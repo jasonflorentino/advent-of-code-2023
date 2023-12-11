@@ -88,10 +88,12 @@ function toScore(h) {
   const cardCounts = Object.values(cards);
 
   switch (cardCounts.length) {
+    // all cards are the same
     case 1: {
       score = SCORES.five;
       break;
     }
+    // only 2 different cards
     case 2: {
       if (hasJokers) {
         score = SCORES.five;
@@ -104,6 +106,7 @@ function toScore(h) {
       }
       break;
     }
+    // 3 different cards
     case 3: {
       let pairCount = 0;
       cardCounts.forEach((c) => (pairCount += c === 2 ? 1 : 0));
@@ -128,6 +131,7 @@ function toScore(h) {
       }
       break;
     }
+    // must be one pair
     case 4: {
       if (hasJokers) {
         score = SCORES.tree;
@@ -136,6 +140,7 @@ function toScore(h) {
       }
       break;
     }
+    // all cards are different
     default:
       if (hasJokers) {
         score = SCORES.onep;
