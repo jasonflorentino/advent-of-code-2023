@@ -55,6 +55,12 @@ function compareScores(a, b) {
 }
 
 function breakTies(a, b) {
+  /**
+   * if scores are the same,
+   * compare the first 2 cards that
+   * differ to determine sort order
+   */
+  // [hand, value, handScore]
   if (a[2] === b[2]) {
     for (let i = 0; i < a[0].length; i++) {
       if (a[0][i] !== b[0][i]) {
@@ -98,11 +104,7 @@ function toScore(h) {
       if (hasJokers) {
         score = SCORES.five;
       } else {
-        if (cardCounts.some((c) => c === 4)) {
-          score = SCORES.four;
-        } else {
-          score = SCORES.full;
-        }
+        score = cardCounts.some((c) => c === 4) ? SCORES.four : SCORES.full;
       }
       break;
     }
@@ -112,41 +114,23 @@ function toScore(h) {
       cardCounts.forEach((c) => (pairCount += c === 2 ? 1 : 0));
       if (pairCount === 2) {
         if (hasJokers) {
-          if (cards.J === 2) {
-            score = SCORES.four;
-          } else {
-            score = SCORES.full;
-          }
+          score = cards.J === 2 ? SCORES.four : SCORES.full;
         } else {
           score = SCORES.twop;
         }
-      } else if (pairCount === 1) {
-        throw `only 1 pair shouldnt be possible: ${h}`;
       } else {
-        if (hasJokers) {
-          score = SCORES.four;
-        } else {
-          score = SCORES.tree;
-        }
+        score = hasJokers ? SCORES.four : SCORES.tree;
       }
       break;
     }
     // must be one pair
     case 4: {
-      if (hasJokers) {
-        score = SCORES.tree;
-      } else {
-        score = SCORES.onep;
-      }
+      score = hasJokers ? SCORES.tree : SCORES.onep;
       break;
     }
     // all cards are different
     default:
-      if (hasJokers) {
-        score = SCORES.onep;
-      } else {
-        score = SCORES.high;
-      }
+      score = hasJokers ? SCORES.onep : SCORES.high;
   }
 
   h.push(score);
